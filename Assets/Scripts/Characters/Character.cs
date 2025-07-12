@@ -9,6 +9,8 @@ namespace Characters
 {
     public class Character : MonoBehaviour
     {
+        [Header("Object References")] public GameObject activePlayerEffect;
+        
         /// <summary>
         /// How much damage the character can take.
         /// Affected by Constitution core attribute.

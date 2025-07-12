@@ -26,9 +26,6 @@ namespace Turn_based_Combat
         {
             Actions?.Clear();
             _playersCurrentTurn = turn;
-            
-            GameObject.Instantiate(TbcController.Instance.activePlayerIndicatorPrefab, 
-                character.transform.position + (Vector3.up * 4), Quaternion.Euler(90, 0, 90), character.gameObject.transform);
             _currentCharacterActions = new Dictionary<Action, bool>();
 
             if (character.actionsAvailableToCharacter.Count > 0)
@@ -129,12 +126,6 @@ namespace Turn_based_Combat
                 Debug.Log("Getting rid of action: " + Actions.Peek().actionName);
                 Actions.Dequeue();
             }
-            
-            // if (_numberOfActionsAvailable <= 0)
-            // {
-            //     // Send event signal to end this character's turn
-            //     OnEndTurn?.Invoke(character, _playersCurrentTurn);
-            // }
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using Characters;
+﻿using System;
+using Characters;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Assertions;
@@ -39,17 +41,22 @@ namespace Turn_based_Combat
         /// </summary>
         public TurnQueue Turns = new();
         
-        public Camera playerCamera;
-        public Character activeCharacter;
-        public PlayerCombatController playerCombatController;
-        public bool isPlayerInCombat = false;
-        public GameObject activePlayerIndicatorPrefab;
-    
+        public bool isPlayerInCombat;
+        
+        [Header("Object References")]
         [SerializeField] private CinemachineCamera playerNonCombatCamera;
+        public Camera playerCamera;
+        public PlayerCombatController playerCombatController;
         [SerializeField] public Button EndTurnButton;
-    
+
+        [Header("Tags")] 
+        public string followerTag;
+        public string playerTag;
+        public string enemyTag;
+        public string combatAreaTag;
+        
         private GameObject _combatCamera;
-        [FormerlySerializedAs("_activeGridManager")] public GridManager activeGridManager;
+        [HideInInspector] public GridManager activeGridManager;
 
         private void Awake()
         {
@@ -96,7 +103,7 @@ namespace Turn_based_Combat
             }
             
             // 3rd: Then add any followers
-            var followers = GameObject.FindGameObjectsWithTag("Follower");
+            var followers = GameObject.FindGameObjectsWithTag(followerTag);
             foreach (var follower in followers)
             {
                 var followerTurn = new PlayerTurn();
@@ -128,18 +135,24 @@ namespace Turn_based_Combat
             var firstTurn = Turns.Peek();
             firstTurn.turn.BeginTurn(firstTurn.character, firstTurn.turn);
 
-            if (firstTurn.character.gameObject.CompareTag("Player"))
+            // Listen to the relevant event based on the type of character
+            if (firstTurn.character.gameObject.CompareTag(playerTag))
                 firstTurn.character.OnPlayerDeath += PlayerDeath;
-            if (firstTurn.character.gameObject.CompareTag("Follower"))
+            if (firstTurn.character.gameObject.CompareTag(followerTag))
                 firstTurn.character.OnFollowerDeath += FollowerDeath;
-            if (firstTurn.character.gameObject.CompareTag("Enemy"))
+            if (firstTurn.character.gameObject.CompareTag(enemyTag))
                 firstTurn.character.OnEnemyDeath += EnemyDeath;
+            
+            // Activate the appropriate active character effect icon
+            firstTurn.character.activePlayerEffect.gameObject.SetActive(true);
         }
 
 
         private void SwitchToNextCharacter(Character character, Turn turn)
         {
             Turns.Requeue(character, turn);
+            // Remove the active indicator
+            character.activePlayerEffect.gameObject.SetActive(false);
             EndTurnButton.onClick.RemoveAllListeners();
             BeginFirstTurn();
         }
@@ -177,7 +190,7 @@ namespace Turn_based_Combat
             var ray = playerCamera.ScreenPointToRay(screenPosition);
             Physics.Raycast(ray, out RaycastHit hit, 100f, activeGridManager.gridCellMask);
         
-            return hit.collider != null && hit.collider.gameObject.CompareTag("CombatArea");
+            return hit.collider != null && hit.collider.gameObject.CompareTag(combatAreaTag);
         }
 
     }

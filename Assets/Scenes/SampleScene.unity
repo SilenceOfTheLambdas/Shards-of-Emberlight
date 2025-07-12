@@ -1784,13 +1784,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe5d192310d2472087cbf793ac600ac6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TBC_Controller
-  playerCamera: {fileID: 330585545}
-  activeCharacter: {fileID: 919132148492127106}
-  playerCombatController: {fileID: 919132148492127102}
   isPlayerInCombat: 0
-  activePlayerIndicatorPrefab: {fileID: 4650656099171434994, guid: 5b812881cb3970d428a1edc9894f4fd8, type: 3}
   playerNonCombatCamera: {fileID: 34276143}
+  playerCamera: {fileID: 330585545}
+  playerCombatController: {fileID: 919132148492127102}
   EndTurnButton: {fileID: 1797514249}
+  followerTag: Follower
+  playerTag: Player
+  enemyTag: Enemy
+  combatAreaTag: CombatArea
   activeGridManager: {fileID: 0}
 --- !u!4 &1388462030
 Transform:
@@ -2092,17 +2094,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95f5a9ea6e6b9fa4491de22efa4c8bf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCombatController
---- !u!114 &919132148492127106 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1209591364554058369, guid: e36d6146343a5204e838d2049b133c53, type: 3}
-  m_PrefabInstance: {fileID: 3155452068229528666}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbf0ec0f9514a61b8e01b9af08f4abc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Characters.Character
 --- !u!1001 &1783316063371337046
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2118,46 +2109,6 @@ PrefabInstance:
     - target: {fileID: 2116103365080174025, guid: 1994cee34ce8ddc4dbfc4fc5746521cc, type: 3}
       propertyPath: m_TagString
       value: Follower
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961916267129215410, guid: 1994cee34ce8ddc4dbfc4fc5746521cc, type: 3}
-      propertyPath: initiative
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961916267129215410, guid: 1994cee34ce8ddc4dbfc4fc5746521cc, type: 3}
-      propertyPath: magicPower
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961916267129215410, guid: 1994cee34ce8ddc4dbfc4fc5746521cc, type: 3}
-      propertyPath: attackPower
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961916267129215410, guid: 1994cee34ce8ddc4dbfc4fc5746521cc, type: 3}
-      propertyPath: defensePower
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961916267129215410, guid: 1994cee34ce8ddc4dbfc4fc5746521cc, type: 3}
-      propertyPath: magicDefensePower
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961916267129215410, guid: 1994cee34ce8ddc4dbfc4fc5746521cc, type: 3}
-      propertyPath: currentCharacterHealth
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961916267129215410, guid: 1994cee34ce8ddc4dbfc4fc5746521cc, type: 3}
-      propertyPath: characterMaxMagicPoints
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961916267129215410, guid: 1994cee34ce8ddc4dbfc4fc5746521cc, type: 3}
-      propertyPath: characterMaxHealthPoints
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961916267129215410, guid: 1994cee34ce8ddc4dbfc4fc5746521cc, type: 3}
-      propertyPath: characterMaxStaminaPoints
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961916267129215410, guid: 1994cee34ce8ddc4dbfc4fc5746521cc, type: 3}
-      propertyPath: currentCharacterStaminaPoints
-      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2961916267129215410, guid: 1994cee34ce8ddc4dbfc4fc5746521cc, type: 3}
       propertyPath: actionsAvailableToCharacter.Array.size
@@ -2225,34 +2176,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1209591364554058369, guid: e36d6146343a5204e838d2049b133c53, type: 3}
-      propertyPath: magicPower
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1209591364554058369, guid: e36d6146343a5204e838d2049b133c53, type: 3}
-      propertyPath: attackPower
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1209591364554058369, guid: e36d6146343a5204e838d2049b133c53, type: 3}
-      propertyPath: defensePower
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1209591364554058369, guid: e36d6146343a5204e838d2049b133c53, type: 3}
-      propertyPath: magicDefensePower
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1209591364554058369, guid: e36d6146343a5204e838d2049b133c53, type: 3}
-      propertyPath: characterMaxMagicPoints
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1209591364554058369, guid: e36d6146343a5204e838d2049b133c53, type: 3}
-      propertyPath: characterMaxHealthPoints
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1209591364554058369, guid: e36d6146343a5204e838d2049b133c53, type: 3}
-      propertyPath: characterMaxStaminaPoints
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1209591364554058369, guid: e36d6146343a5204e838d2049b133c53, type: 3}
       propertyPath: actionsAvailableToCharacter.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -2310,6 +2233,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2136193833354740347, guid: e36d6146343a5204e838d2049b133c53, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2306222378447883123, guid: e36d6146343a5204e838d2049b133c53, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5374649610354220410, guid: e36d6146343a5204e838d2049b133c53, type: 3}
