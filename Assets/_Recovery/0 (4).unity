@@ -2433,10 +2433,6 @@ PrefabInstance:
       propertyPath: gridCellParentTransform
       value: 
       objectReference: {fileID: 475027448}
-    - target: {fileID: 8956574818798283808, guid: 8ed1778e0a8b3124bacf7cff5a6d3312, type: 3}
-      propertyPath: enemyCharacters.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

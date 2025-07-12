@@ -1,15 +1,12 @@
 using System;
 using Characters;
+using UnityEngine;
 
 namespace Turn_based_Combat.Actions
 {
+    [CreateAssetMenu(fileName = "SkillAction", menuName = "Turn-based Combat/Actions/Skill Action")]
     public class SkillAction : Action
     {
-        public SkillAction(Turn turn) : base(turn)
-        {
-            
-        }
-
         public override event Action<Character> OnActionEnd;
         protected override void SetMagicCost(int magicCost) => MagicCost = magicCost;
         protected override void SetStaminaCost(int staminaCost) =>  StaminaCost = staminaCost;

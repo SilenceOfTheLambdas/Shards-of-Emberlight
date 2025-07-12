@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Turn_based_Combat;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Action = Turn_based_Combat.Action;
 
 namespace Characters
 {
@@ -68,6 +70,8 @@ namespace Characters
         public event Action<Character> OnEnemyDeath;
         public event Action<Character> OnPlayerDeath;
 
+        public List<Action> actionsAvailableToCharacter;
+
         private void Start()
         {
             currentCharacterHealth = characterMaxHealthPoints;
@@ -99,6 +103,7 @@ namespace Characters
         public void CalculateDamage(int damage, TbcController.DamageType damageType)
         {
             // TODO: Create some magic formula to work-out damage negation based on character stats.
+            TakeDamage(damage);
         }
         
         /// <summary>
@@ -111,6 +116,24 @@ namespace Characters
         private void TakeDamage(int damage)
         {
             currentCharacterHealth -= damage;
+            if (currentCharacterHealth <= 0)
+            {
+                switch (gameObject.tag)
+                {
+                    case "Player":
+                        OnPlayerDeath?.Invoke(this);
+                        break;
+                    case "Follower":
+                        OnFollowerDeath?.Invoke(this);
+                        break;
+                    case "Enemy":
+                        OnEnemyDeath?.Invoke(this);
+                        break;
+                    default: 
+                        Debug.LogError("Tried to kill an untagged character: " + name);
+                        break;
+                }
+            }
         }
         
         public void PayMagicCost(int magicCost)

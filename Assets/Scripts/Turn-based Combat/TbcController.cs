@@ -1,32 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Characters;
+﻿using Characters;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
 
 namespace Turn_based_Combat
 {
-    public class CharacterInitiativeComparer : IComparer<Character>
-    {
-        public int Compare(Character x, Character y)
-        {
-            if (y != null)
-                if (x != null)
-                {
-                    if (x.initiative == y.initiative)
-                    {
-                        return 1;
-                    }
-
-                    return y.initiative.CompareTo(x.initiative);
-                }
-            return 0;
-        }
-    }
     public class TbcController : MonoBehaviour
     {
         private static TbcController _instance;
@@ -54,7 +37,7 @@ namespace Turn_based_Combat
         /// <summary>
         /// The list of Turns for this combat session
         /// </summary>
-        public TurnQueue Turns = new TurnQueue();
+        public TurnQueue Turns = new();
         
         public Camera playerCamera;
         public Character activeCharacter;
@@ -63,6 +46,7 @@ namespace Turn_based_Combat
         public GameObject activePlayerIndicatorPrefab;
     
         [SerializeField] private CinemachineCamera playerNonCombatCamera;
+        [SerializeField] public Button EndTurnButton;
     
         private GameObject _combatCamera;
         [FormerlySerializedAs("_activeGridManager")] public GridManager activeGridManager;
@@ -135,10 +119,6 @@ namespace Turn_based_Combat
                 var (character, theTurn) = Turns.Dequeue();
                 theTurn.UpdateTurn(character, theTurn);
                 theTurn.OnEndTurn += SwitchToNextCharacter;
-                
-                // TODO: Debugging Only
-                // if (Keyboard.current.escapeKey.isPressed)
-                //     playerCombatController.GetComponent<Character>().currentCharacterHealth = 0;
             }
         }
 
@@ -159,9 +139,8 @@ namespace Turn_based_Combat
 
         private void SwitchToNextCharacter(Character character, Turn turn)
         {
-            // TODO: Switch to the next character
-            Debug.Log("Switched to next character");
             Turns.Requeue(character, turn);
+            EndTurnButton.onClick.RemoveAllListeners();
             BeginFirstTurn();
         }
         

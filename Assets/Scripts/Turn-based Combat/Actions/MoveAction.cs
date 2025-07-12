@@ -6,19 +6,16 @@ using UnityEngine.InputSystem;
 
 namespace Turn_based_Combat.Actions
 {
+    [CreateAssetMenu(fileName = "MoveAction", menuName = "Turn-based Combat/Actions/Move Action")]
     public class MoveAction : Action
     {
         public int MovementRange;
-
-        public MoveAction(Turn turn) : base(turn) {}
 
         public override event Action<Character> OnActionEnd;
         protected override void SetMagicCost(int magicCost) => MagicCost = magicCost;
         protected override void SetStaminaCost(int staminaCost) => StaminaCost = staminaCost;
         protected override void StartAction(Character character)
         {
-            Debug.Log("Started Move Action");
-            SetStaminaCost(10);
         }
 
         public override void UpdateAction(Character character)
